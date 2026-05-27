@@ -1,0 +1,47 @@
+package com.morcineck.bffagendador.infastructure;
+
+
+import com.morcineck.bffagendador.business.dto.in.TarefasDTOResquest;
+import com.morcineck.bffagendador.business.dto.out.TarefasDTOResponse;
+import com.morcineck.bffagendador.business.enums.StatusNotificacaoEnum;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@FeignClient(name = "agendador-tarefas", url = "${agendador-tarefas.url}")
+public interface TarefasClient {
+
+    @PostMapping
+    TarefasDTOResponse gravarTarefas(@RequestBody TarefasDTOResquest dto,
+                                     @RequestHeader("Authorization") String toke);
+
+    @GetMapping("/eventos")
+    List<TarefasDTOResponse> buscaListaDeTarefasPorPeriodo(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal,
+            @RequestHeader("Authorization") String toke);
+
+    @GetMapping
+    List<TarefasDTOResponse> buscaTarefasPorEmail(
+            @RequestHeader("Authorization") String token);
+
+
+    @DeleteMapping
+    void deletaTarefaPorId(@RequestParam("id") String id,
+                           @RequestHeader("Authorization") String toke);
+
+
+    @PatchMapping
+    TarefasDTOResponse alteraStatusNotificacao(@RequestParam("status") StatusNotificacaoEnum status,
+                                               @RequestParam("id") String id,
+                                               @RequestHeader("Authorization") String toke);
+
+    @PutMapping
+    TarefasDTOResponse updateTarefas(@RequestBody TarefasDTOResquest dto,
+                                     @RequestParam("id") String id,
+                                     @RequestHeader("Authorization") String toke);
+
+}
