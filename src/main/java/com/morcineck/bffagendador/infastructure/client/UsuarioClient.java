@@ -1,4 +1,4 @@
-package com.morcineck.bffagendador.infastructure;
+package com.morcineck.bffagendador.infastructure.client;
 
 
 import com.morcineck.bffagendador.business.dto.in.EnderecoDTORequest;
