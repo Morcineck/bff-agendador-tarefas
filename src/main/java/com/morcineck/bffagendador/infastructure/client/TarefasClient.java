@@ -16,13 +16,13 @@ public interface TarefasClient {
 
     @PostMapping
     TarefasDTOResponse gravarTarefas(@RequestBody TarefasDTOResquest dto,
-                                     @RequestHeader("Authorization") String toke);
+                                     @RequestHeader("Authorization") String token);
 
     @GetMapping("/eventos")
     List<TarefasDTOResponse> buscaListaDeTarefasPorPeriodo(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal,
-            @RequestHeader("Authorization") String toke);
+            @RequestHeader("Authorization") String token);
 
     @GetMapping
     List<TarefasDTOResponse> buscaTarefasPorEmail(
@@ -31,17 +31,17 @@ public interface TarefasClient {
 
     @DeleteMapping
     void deletaTarefaPorId(@RequestParam("id") String id,
-                           @RequestHeader("Authorization") String toke);
+                           @RequestHeader("Authorization") String token);
 
 
     @PatchMapping
     TarefasDTOResponse alteraStatusNotificacao(@RequestParam("status") StatusNotificacaoEnum status,
                                                @RequestParam("id") String id,
-                                               @RequestHeader("Authorization") String toke);
+                                               @RequestHeader("Authorization") String token);
 
     @PutMapping
     TarefasDTOResponse updateTarefas(@RequestBody TarefasDTOResquest dto,
                                      @RequestParam("id") String id,
-                                     @RequestHeader("Authorization") String toke);
+                                     @RequestHeader("Authorization") String token);
 
 }

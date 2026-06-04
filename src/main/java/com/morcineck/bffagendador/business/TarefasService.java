@@ -22,7 +22,6 @@ public class TarefasService {
 
     }
 
-
     public List<TarefasDTOResponse> buscaTarefasAgendadasPorPeriodo(LocalDateTime dataInicial,
                                                                     LocalDateTime dataFinal, String token) {
 
