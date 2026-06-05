@@ -29,6 +29,9 @@ public class CronService {
     public void buscaTarefasProximaHora() {
 
         String tokenBruto = login(converterParaRequestDTO());
+        // O serviço de usuários retorna o token com "Bearer" colado sem espaço (BearereyJ...).
+        // O replace remove qualquer ocorrência de "Bearer" e o trim limpa espaços,
+        //  garantindo que o token final fique no formato correto: "Bearer eyJ..."
         String token = "Bearer " + tokenBruto.replace("Bearer", "").trim();
 
         LocalDateTime horaAtual = LocalDateTime.now();
@@ -43,7 +46,7 @@ public class CronService {
     }
 
     private String login(LoginResquestDTO dto) {
-       return usuarioServices.loginUsuario(dto);
+        return usuarioServices.loginUsuario(dto);
 
     }
 
