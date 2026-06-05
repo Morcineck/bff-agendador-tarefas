@@ -28,14 +28,8 @@ public class CronService {
     @Scheduled(cron = "${cron.horario}")
     public void buscaTarefasProximaHora() {
 
-       // String token = login(converterParaRequestDTO()); // token alterado para tokenBruto para testar bug
-
         String tokenBruto = login(converterParaRequestDTO());
         String token = "Bearer " + tokenBruto.replace("Bearer", "").trim();
-
-
-
-
 
         LocalDateTime horaAtual = LocalDateTime.now();
         LocalDateTime horaFuturaMisCinco = LocalDateTime.now().plusHours(1);
