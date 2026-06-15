@@ -26,23 +26,14 @@ public class TarefasController {
 
     private final TarefasService tarefasService;
 
-    // Método auxiliar que garante que o token JWT sempre esteja no formato correto "Bearer eyJ..."
-    // Mesmo problema identificado no UsuarioController — token sem espaço causa 403 Forbidden.
-    private String formatarToken(String token) {
-        if (token == null) return null; // Retorna nulo se nenhum token foi enviado
-        return token.startsWith("Bearer ")
-                ? token // Token já está correto, usa como está
-                : "Bearer " + token.replace("Bearer", "").trim(); // Remove "Bearer" colado, adiciona com espaço correto
-    }
-
     @PostMapping
     @Operation(summary = "Salvar tarefas de usuários", description = "Cria uma nova tarefa")
     @ApiResponse(responseCode = "200", description = "Tarefa salva com sucesso")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     public ResponseEntity<TarefasDTOResponse> gravarTarefas(@RequestBody TarefasDTOResquest dto,
                                                             @RequestHeader(value = "Authorization", required = false) String token) {
-        // Token formatado antes de repassar para evitar 403 no serviço de tarefas
-        return ResponseEntity.ok(tarefasService.gravaTarefa(formatarToken(token), dto));
+
+        return ResponseEntity.ok(tarefasService.gravaTarefa(token, dto));
     }
 
     @GetMapping("/eventos")
@@ -54,8 +45,8 @@ public class TarefasController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal,
             @RequestHeader(name = "Authorization", required = false) String token) {
-        // Token formatado antes de repassar para evitar 403 no serviço de tarefas
-        return ResponseEntity.ok(tarefasService.buscaTarefasAgendadasPorPeriodo(dataInicial, dataFinal, formatarToken(token)));
+
+        return ResponseEntity.ok(tarefasService.buscaTarefasAgendadasPorPeriodo(dataInicial, dataFinal, token));
     }
 
     @GetMapping
@@ -66,8 +57,8 @@ public class TarefasController {
     @ApiResponse(responseCode = "401", description = "Usuário não autorizado")
     public ResponseEntity<List<TarefasDTOResponse>> buscaTarefasPorEmail(
             @RequestHeader(name = "Authorization", required = false) String token) {
-        // Token formatado antes de repassar para evitar 403 no serviço de tarefas
-        return ResponseEntity.ok(tarefasService.buscarTarefaPorEmail(formatarToken(token)));
+
+        return ResponseEntity.ok(tarefasService.buscarTarefaPorEmail(token));
     }
 
     @DeleteMapping
@@ -78,8 +69,7 @@ public class TarefasController {
     @ApiResponse(responseCode = "403", description = "Tarefa id não encontrado")
     public ResponseEntity<Void> deletaTarefaPorId(@RequestParam("id") String id,
                                                   @RequestHeader(name = "Authorization", required = false) String token) {
-        // Token formatado antes de repassar para evitar 403 no serviço de tarefas
-        tarefasService.deletaTarefaPorId(id, formatarToken(token));
+        tarefasService.deletaTarefaPorId(id,token);
         return ResponseEntity.ok().build();
     }
 
@@ -91,8 +81,7 @@ public class TarefasController {
     public ResponseEntity<TarefasDTOResponse> alteraStatusNotificacao(@RequestParam("status") StatusNotificacaoEnum status,
                                                                       @RequestParam("id") String id,
                                                                       @RequestHeader(name = "Authorization", required = false) String token) {
-        // Token formatado antes de repassar para evitar 403 no serviço de tarefas
-        return ResponseEntity.ok(tarefasService.alteraStatus(status, id, formatarToken(token)));
+        return ResponseEntity.ok(tarefasService.alteraStatus(status, id, token));
     }
 
     @PutMapping
@@ -103,7 +92,6 @@ public class TarefasController {
     public ResponseEntity<TarefasDTOResponse> updateTarefas(@RequestBody TarefasDTOResquest dto,
                                                             @RequestParam("id") String id,
                                                             @RequestHeader(name = "Authorization", required = false) String token) {
-        // Token formatado antes de repassar para evitar 403 no serviço de tarefas
-        return ResponseEntity.ok(tarefasService.updateTarefas(dto, id, formatarToken(token)));
+        return ResponseEntity.ok(tarefasService.updateTarefas(dto, id, token));
     }
 }
