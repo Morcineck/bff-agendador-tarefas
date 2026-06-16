@@ -25,21 +25,6 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-
-    // Método auxiliar que garante que o token JWT sempre esteja no formato correto "Bearer eyJ..."
-    // Problema identificado: o serviço de usuário retornava o token sem espaço (BearereyJ...),
-    // fazendo o JwtRequestFilter rejeitar a requisição com 403 Forbidden.
-    // Solução: normalizar o token antes de repassar para o UsuarioService.
-
-    private String formatarToken(String token) {
-        if (token == null) return null; // Retorna nulo se nenhum token foi enviado
-        return token.startsWith("Bearer ")
-                ? token // Token já está correto, usa como está
-                : "Bearer " + token.replace(
-                "Bearer ", "").trim(); // Remove "Bearer" colado, adiciona com espaço correto
-    }
-
-
     @PostMapping
     @Operation(summary = "Salvar usuários", description = "Cria um novo usuário")
     @ApiResponse(responseCode = "200", description = "Usuário salvo com sucesso")
@@ -51,7 +36,7 @@ public class UsuarioController {
 
     @PostMapping("/login")
     @Operation(summary = "Login de usuários", description = "Login de usuário")
-    @ApiResponse(responseCode = "200", description = "Usuário locago com sucesso")
+    @ApiResponse(responseCode = "200", description = "Usuário logado com sucesso")
     @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     public String login(@RequestBody LoginResquestDTO usuarioDTo) {
@@ -59,15 +44,15 @@ public class UsuarioController {
     }
 
     @GetMapping
-    @Operation(summary = "Buscar dados de usuários por email", description = "Cria um novo usuário")
-    @ApiResponse(responseCode = "200", description = "Usuário encontrato")
+    @Operation(summary = "Buscar usuários por email", description = "Busca usuário por email")
+    @ApiResponse(responseCode = "200", description = "Usuário encontrado")
     @ApiResponse(responseCode = "403", description = "Usuário não cadastrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
-    public ResponseEntity<UsuarioDTOResponse> buscaUsiarioPorEmail(@RequestParam("email") String email,
+    public ResponseEntity<UsuarioDTOResponse> buscaUsuarioPorEmail(@RequestParam("email") String email,
                                                                    @RequestHeader(name = "Authorization",
                                                                            required = false) String token) {
-        return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email, formatarToken(token)));
+        return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email, token));
     }
 
     @DeleteMapping("/{email}")
@@ -79,7 +64,7 @@ public class UsuarioController {
     public ResponseEntity<Void> deletaUsuarioPorEmail(@PathVariable String email,
                                                       @RequestHeader(name = "Authorization",
                                                               required = false) String token) {
-        usuarioService.deletaUsuarioPorEmail(email, formatarToken(token));
+        usuarioService.deletaUsuarioPorEmail(email, token);
         return ResponseEntity.ok().build();
     }
 
@@ -92,7 +77,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTOResponse> atualizaDadoUsuario(@RequestBody UsuarioDTORequest dto,
                                                                   @RequestHeader(name = "Authorization",
                                                                           required = false) String token) {
-        return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(formatarToken(token), dto));
+        return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token, dto));
     }
 
     @PutMapping("/endereco")
@@ -105,13 +90,13 @@ public class UsuarioController {
                                                                 @RequestParam("id") Long id,
                                                                 @RequestHeader(name = "Authorization",
                                                                         required = false) String token) {
-        return ResponseEntity.ok(usuarioService.atualizaEndereco(id, dto, formatarToken(token)));
+        return ResponseEntity.ok(usuarioService.atualizaEndereco(id, dto, token));
     }
 
 
     @PutMapping("/telefone")
     @Operation(summary = "Atualiza telefone de usuários", description = "Atualiza telefone de usuário")
-    @ApiResponse(responseCode = "200", description = "telefone atualizado com sucesso")
+    @ApiResponse(responseCode = "200", description = "Telefone atualizado com sucesso")
     @ApiResponse(responseCode = "403", description = "Usuário não cadastrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
@@ -119,7 +104,7 @@ public class UsuarioController {
                                                                 @RequestHeader("id") Long id,
                                                                 @RequestHeader(name = "Authorization",
                                                                         required = false) String token) {
-        return ResponseEntity.ok(usuarioService.atualizaTelefone(id, dto, formatarToken(token)));
+        return ResponseEntity.ok(usuarioService.atualizaTelefone(id, dto, token));
     }
 
     @PostMapping("/endereco")
@@ -131,7 +116,7 @@ public class UsuarioController {
     public ResponseEntity<EnderecoDTOResponse> cadastraEndereco(@RequestBody EnderecoDTORequest dto,
                                                                 @RequestHeader(name = "Authorization",
                                                                         required = false) String token) {
-        return ResponseEntity.ok(usuarioService.cadastraEndereco(formatarToken(token), dto));
+        return ResponseEntity.ok(usuarioService.cadastraEndereco(token, dto));
 
     }
 
@@ -144,6 +129,6 @@ public class UsuarioController {
     public ResponseEntity<TelefoneDTOResponse> cadastraTelefone(@RequestBody TelefoneDTORequest dto,
                                                                 @RequestHeader(name = "Authorization",
                                                                         required = false) String token) {
-        return ResponseEntity.ok(usuarioService.cadastraTelefone(formatarToken(token), dto));
+        return ResponseEntity.ok(usuarioService.cadastraTelefone(token, dto));
     }
 }
