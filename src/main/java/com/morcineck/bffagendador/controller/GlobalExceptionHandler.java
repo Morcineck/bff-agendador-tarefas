@@ -2,6 +2,7 @@ package com.morcineck.bffagendador.controller;
 
 
 import com.morcineck.bffagendador.infastructure.exceptions.ConflictException;
+import com.morcineck.bffagendador.infastructure.exceptions.IllegalArgumentExcepiton;
 import com.morcineck.bffagendador.infastructure.exceptions.ResourceNotFoundException;
 import com.morcineck.bffagendador.infastructure.exceptions.UnauthorizedException;
 import org.springframework.http.HttpStatus;
@@ -14,17 +15,22 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(),  HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ConflictException.class)
     public ResponseEntity<String> handleConflictException(ConflictException ex) {
-        return new ResponseEntity<>(ex.getMessage(),  HttpStatus.CONFLICT);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<String> handleUnauthorizedException(UnauthorizedException ex) {
-        return new ResponseEntity<>(ex.getMessage(),  HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(IllegalArgumentExcepiton.class)
+    public ResponseEntity<String> handleIllegalArgumentExcepiton(IllegalArgumentExcepiton ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }
