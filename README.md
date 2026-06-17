@@ -97,8 +97,12 @@ docker-compose up --build
 ---
  
 ## Relacionamento com outros serviços
- 
+
 ```
+Sistema de Agendamento de Tarefas
+
+Arquitetura baseada em microsserviços utilizando Java e Spring Boot.
+
         ┌──────────────────────────┐
         │  bff-agendador-tarefas   │
         └────────────┬─────────────┘
