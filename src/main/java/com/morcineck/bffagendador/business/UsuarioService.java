@@ -8,6 +8,7 @@ import com.morcineck.bffagendador.business.dto.in.UsuarioDTORequest;
 import com.morcineck.bffagendador.business.dto.out.EnderecoDTOResponse;
 import com.morcineck.bffagendador.business.dto.out.TelefoneDTOResponse;
 import com.morcineck.bffagendador.business.dto.out.UsuarioDTOResponse;
+import com.morcineck.bffagendador.business.dto.out.ViaCepDTOResponse;
 import com.morcineck.bffagendador.infastructure.client.UsuarioClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class UsuarioService {
         return client.salvaUsuario(usuarioDTO);
     }
 
-    public  String loginUsuario(LoginResquestDTO usuarioDTO){
+    public String loginUsuario(LoginResquestDTO usuarioDTO) {
         return client.login(usuarioDTO);
     }
 
@@ -33,12 +34,12 @@ public class UsuarioService {
 
 
     public void deletaUsuarioPorEmail(String email, String token) {
-          client.deletaUsuarioPorEmail(email, token);
+        client.deletaUsuarioPorEmail(email, token);
 
     }
 
     public UsuarioDTOResponse atualizaDadosUsuario(String token, UsuarioDTORequest dto) {
-         return client.atualizaDadoUsuario(dto, token);
+        return client.atualizaDadoUsuario(dto, token);
 
     }
 
@@ -57,8 +58,13 @@ public class UsuarioService {
 
     }
 
-    public TelefoneDTOResponse cadastraTelefone(String token, TelefoneDTORequest dto){
-       return client.cadastraTelefone(dto, token);
+    public TelefoneDTOResponse cadastraTelefone(String token, TelefoneDTORequest dto) {
+        return client.cadastraTelefone(dto, token);
+
+    }
+
+    public ViaCepDTOResponse buscarEnderecoPorCep(String cep) {
+        return client.bucasrEnderecoCep(cep);
 
     }
 
