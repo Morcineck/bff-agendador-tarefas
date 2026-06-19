@@ -2,7 +2,7 @@ package com.morcineck.bffagendador.business;
 
 
 import com.morcineck.bffagendador.business.dto.in.EnderecoDTORequest;
-import com.morcineck.bffagendador.business.dto.in.LoginResquestDTO;
+import com.morcineck.bffagendador.business.dto.in.LoginRequestDTO;
 import com.morcineck.bffagendador.business.dto.in.TelefoneDTORequest;
 import com.morcineck.bffagendador.business.dto.in.UsuarioDTORequest;
 import com.morcineck.bffagendador.business.dto.out.EnderecoDTOResponse;
@@ -24,12 +24,12 @@ public class UsuarioService {
         return client.salvaUsuario(usuarioDTO);
     }
 
-    public String loginUsuario(LoginResquestDTO usuarioDTO) {
+    public String loginUsuario(LoginRequestDTO usuarioDTO) {
         return client.login(usuarioDTO);
     }
 
     public UsuarioDTOResponse buscarUsuarioPorEmail(String email, String token) {
-        return client.buscaUsiarioPorEmail(email, token);
+        return client.buscaUsuarioPorEmail(email, token);
     }
 
 
@@ -64,7 +64,7 @@ public class UsuarioService {
     }
 
     public ViaCepDTOResponse buscarEnderecoPorCep(String cep) {
-        return client.bucasrEnderecoCep(cep);
+        return client.buscarEnderecoCep(cep);
 
     }
 

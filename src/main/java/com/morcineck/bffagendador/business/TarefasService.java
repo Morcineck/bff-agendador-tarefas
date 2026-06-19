@@ -1,7 +1,7 @@
 package com.morcineck.bffagendador.business;
 
 
-import com.morcineck.bffagendador.business.dto.in.TarefasDTOResquest;
+import com.morcineck.bffagendador.business.dto.in.TarefasDTORequest;
 import com.morcineck.bffagendador.business.dto.out.TarefasDTOResponse;
 import com.morcineck.bffagendador.business.enums.StatusNotificacaoEnum;
 import com.morcineck.bffagendador.infastructure.client.TarefasClient;
@@ -17,7 +17,7 @@ public class TarefasService {
 
     private final TarefasClient tarefasClient;
 
-    public TarefasDTOResponse gravaTarefa(String token, TarefasDTOResquest dto) {
+    public TarefasDTOResponse gravaTarefa(String token, TarefasDTORequest dto) {
         return tarefasClient.gravarTarefas(dto, token);
 
     }
@@ -44,7 +44,7 @@ public class TarefasService {
         return tarefasClient.alteraStatusNotificacao(status, id, token);
     }
 
-    public TarefasDTOResponse updateTarefas(TarefasDTOResquest dto, String id, String token) {
+    public TarefasDTOResponse updateTarefas(TarefasDTORequest dto, String id, String token) {
         return tarefasClient.updateTarefas(dto, id, token);
 
     }

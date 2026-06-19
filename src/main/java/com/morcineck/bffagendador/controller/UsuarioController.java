@@ -3,7 +3,7 @@ package com.morcineck.bffagendador.controller;
 
 import com.morcineck.bffagendador.business.UsuarioService;
 import com.morcineck.bffagendador.business.dto.in.EnderecoDTORequest;
-import com.morcineck.bffagendador.business.dto.in.LoginResquestDTO;
+import com.morcineck.bffagendador.business.dto.in.LoginRequestDTO;
 import com.morcineck.bffagendador.business.dto.in.TelefoneDTORequest;
 import com.morcineck.bffagendador.business.dto.in.UsuarioDTORequest;
 import com.morcineck.bffagendador.business.dto.out.EnderecoDTOResponse;
@@ -40,8 +40,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Usuário logado com sucesso")
     @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
-    public String login(@RequestBody LoginResquestDTO usuarioDTo) {
-        return usuarioService.loginUsuario(usuarioDTo);
+    public String login(@RequestBody LoginRequestDTO usuarioDTO) {
+        return usuarioService.loginUsuario(usuarioDTO);
     }
 
     @GetMapping
@@ -135,7 +135,7 @@ public class UsuarioController {
 
     @GetMapping("/endereco/{cep}")
     @Operation(summary = "Busca endereço pelo cep", description = "Busca dados de endereço recebendo um cep")
-    @ApiResponse(responseCode = "200", description = "Dados de endereço encontrato com sucesso")
+    @ApiResponse(responseCode = "200", description = "Dados de endereço encontrado com sucesso")
     @ApiResponse(responseCode = "400", description = "Cep inválido")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     public ResponseEntity<ViaCepDTOResponse> buscarEndereco(@PathVariable("cep") String cep) {

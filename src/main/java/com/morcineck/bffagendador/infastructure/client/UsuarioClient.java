@@ -2,7 +2,7 @@ package com.morcineck.bffagendador.infastructure.client;
 
 
 import com.morcineck.bffagendador.business.dto.in.EnderecoDTORequest;
-import com.morcineck.bffagendador.business.dto.in.LoginResquestDTO;
+import com.morcineck.bffagendador.business.dto.in.LoginRequestDTO;
 import com.morcineck.bffagendador.business.dto.in.TelefoneDTORequest;
 import com.morcineck.bffagendador.business.dto.in.UsuarioDTORequest;
 import com.morcineck.bffagendador.business.dto.out.EnderecoDTOResponse;
@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.*;
 public interface UsuarioClient {
 
     @GetMapping
-    UsuarioDTOResponse buscaUsiarioPorEmail(@RequestParam("email") String email,
+    UsuarioDTOResponse buscaUsuarioPorEmail(@RequestParam("email") String email,
                                             @RequestHeader("Authorization") String token);
 
     @PostMapping
     UsuarioDTOResponse salvaUsuario(@RequestBody UsuarioDTORequest usuarioDTO);
 
     @PostMapping("/login")
-    String login(@RequestBody LoginResquestDTO usuarioDTo);
+    String login(@RequestBody LoginRequestDTO usuarioDTo);
 
 
     @DeleteMapping("/{email}")
@@ -54,5 +54,5 @@ public interface UsuarioClient {
                                          @RequestHeader("Authorization") String token);
 
     @GetMapping("/endereco/{cep}")
-    ViaCepDTOResponse bucasrEnderecoCep(@PathVariable("cep") String cep);
+    ViaCepDTOResponse buscarEnderecoCep(@PathVariable("cep") String cep);
 }
