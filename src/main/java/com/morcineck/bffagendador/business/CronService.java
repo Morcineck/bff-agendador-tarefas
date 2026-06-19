@@ -1,6 +1,6 @@
 package com.morcineck.bffagendador.business;
 
-import com.morcineck.bffagendador.business.dto.in.LoginResquestDTO;
+import com.morcineck.bffagendador.business.dto.in.LoginRequestDTO;
 import com.morcineck.bffagendador.business.dto.out.TarefasDTOResponse;
 import com.morcineck.bffagendador.business.enums.StatusNotificacaoEnum;
 import lombok.RequiredArgsConstructor;
@@ -35,23 +35,23 @@ public class CronService {
         String token = "Bearer " + tokenBruto.replace("Bearer ", "").trim();
 
         LocalDateTime horaAtual = LocalDateTime.now();
-        LocalDateTime horaFuturaMisCinco = LocalDateTime.now().plusHours(1);
+        LocalDateTime horaFuturaMaisCinco = LocalDateTime.now().plusHours(1);
         List<TarefasDTOResponse> listaTarefas = tarefasService.buscaTarefasAgendadasPorPeriodo(horaAtual,
-                horaFuturaMisCinco, token);
+                horaFuturaMaisCinco, token);
 
         listaTarefas.forEach(tarefa -> {
             emailService.enviaEmail(tarefa);
-            tarefasService.alteraStatus(StatusNotificacaoEnum.notificado, tarefa.getId(), token);
+            tarefasService.alteraStatus(StatusNotificacaoEnum.NOTIFICADO, tarefa.getId(), token);
         });
     }
 
-    private String login(LoginResquestDTO dto) {
+    private String login(LoginRequestDTO dto) {
         return usuarioServices.loginUsuario(dto);
 
     }
 
-    public LoginResquestDTO converterParaRequestDTO() {
-        return LoginResquestDTO.builder()
+    public LoginRequestDTO converterParaRequestDTO() {
+        return LoginRequestDTO.builder()
                 .email(email)
                 .senha(senha)
                 .build();

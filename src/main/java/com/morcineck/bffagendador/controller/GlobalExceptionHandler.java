@@ -2,7 +2,7 @@ package com.morcineck.bffagendador.controller;
 
 
 import com.morcineck.bffagendador.infastructure.exceptions.ConflictException;
-import com.morcineck.bffagendador.infastructure.exceptions.IllegalArgumentExcepiton;
+import com.morcineck.bffagendador.infastructure.exceptions.IllegalArgumentBusinessException;
 import com.morcineck.bffagendador.infastructure.exceptions.ResourceNotFoundException;
 import com.morcineck.bffagendador.infastructure.exceptions.UnauthorizedException;
 import org.springframework.http.HttpStatus;
@@ -28,8 +28,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(IllegalArgumentExcepiton.class)
-    public ResponseEntity<String> handleIllegalArgumentExcepiton(IllegalArgumentExcepiton ex) {
+    @ExceptionHandler(IllegalArgumentBusinessException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentBusinessException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

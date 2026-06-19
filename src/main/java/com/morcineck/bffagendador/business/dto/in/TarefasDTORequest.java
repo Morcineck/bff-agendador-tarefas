@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TarefasDTOResquest {
+public class TarefasDTORequest {
 
 
     private String nomeTarefa;

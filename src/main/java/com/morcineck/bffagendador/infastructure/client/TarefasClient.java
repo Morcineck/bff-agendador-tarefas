@@ -1,7 +1,7 @@
 package com.morcineck.bffagendador.infastructure.client;
 
 
-import com.morcineck.bffagendador.business.dto.in.TarefasDTOResquest;
+import com.morcineck.bffagendador.business.dto.in.TarefasDTORequest;
 import com.morcineck.bffagendador.business.dto.out.TarefasDTOResponse;
 import com.morcineck.bffagendador.business.enums.StatusNotificacaoEnum;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -15,7 +15,7 @@ import java.util.List;
 public interface TarefasClient {
 
     @PostMapping
-    TarefasDTOResponse gravarTarefas(@RequestBody TarefasDTOResquest dto,
+    TarefasDTOResponse gravarTarefas(@RequestBody TarefasDTORequest dto,
                                      @RequestHeader("Authorization") String token);
 
     @GetMapping("/eventos")
@@ -40,7 +40,7 @@ public interface TarefasClient {
                                                @RequestHeader("Authorization") String token);
 
     @PutMapping
-    TarefasDTOResponse updateTarefas(@RequestBody TarefasDTOResquest dto,
+    TarefasDTOResponse updateTarefas(@RequestBody TarefasDTORequest dto,
                                      @RequestParam("id") String id,
                                      @RequestHeader("Authorization") String token);
 

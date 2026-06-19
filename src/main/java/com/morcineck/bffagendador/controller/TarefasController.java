@@ -1,7 +1,7 @@
 package com.morcineck.bffagendador.controller;
 
 import com.morcineck.bffagendador.business.TarefasService;
-import com.morcineck.bffagendador.business.dto.in.TarefasDTOResquest;
+import com.morcineck.bffagendador.business.dto.in.TarefasDTORequest;
 import com.morcineck.bffagendador.business.dto.out.TarefasDTOResponse;
 import com.morcineck.bffagendador.business.enums.StatusNotificacaoEnum;
 import com.morcineck.bffagendador.infastructure.security.SecurityConfig;
@@ -30,7 +30,7 @@ public class TarefasController {
     @Operation(summary = "Salvar tarefas de usuários", description = "Cria uma nova tarefa")
     @ApiResponse(responseCode = "200", description = "Tarefa salva com sucesso")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
-    public ResponseEntity<TarefasDTOResponse> gravarTarefas(@RequestBody TarefasDTOResquest dto,
+    public ResponseEntity<TarefasDTOResponse> gravarTarefas(@RequestBody TarefasDTORequest dto,
                                                             @RequestHeader(value = "Authorization", required = false) String token) {
 
         return ResponseEntity.ok(tarefasService.gravaTarefa(token, dto));
@@ -53,7 +53,7 @@ public class TarefasController {
     @Operation(summary = "Busca lista de tarefas por email de usuário", description = "busca tarefas cadastradas por período")
     @ApiResponse(responseCode = "200", description = "Tarefa encontrada")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
-    @ApiResponse(responseCode = "403", description = "Tarefa por email não encontrado")
+    @ApiResponse(responseCode = "403", description = "Tarefa por email não encontrada")
     @ApiResponse(responseCode = "401", description = "Usuário não autorizado")
     public ResponseEntity<List<TarefasDTOResponse>> buscaTarefasPorEmail(
             @RequestHeader(name = "Authorization", required = false) String token) {
@@ -66,7 +66,7 @@ public class TarefasController {
     @ApiResponse(responseCode = "200", description = "Tarefa deletada")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     @ApiResponse(responseCode = "401", description = "Usuário não autorizado")
-    @ApiResponse(responseCode = "403", description = "Tarefa id não encontrado")
+    @ApiResponse(responseCode = "403", description = "Tarefa id não encontrada")
     public ResponseEntity<Void> deletaTarefaPorId(@RequestParam("id") String id,
                                                   @RequestHeader(name = "Authorization", required = false) String token) {
         tarefasService.deletaTarefaPorId(id,token);
@@ -89,7 +89,7 @@ public class TarefasController {
     @ApiResponse(responseCode = "200", description = "Tarefa alterada")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     @ApiResponse(responseCode = "401", description = "Usuário não autorizado")
-    public ResponseEntity<TarefasDTOResponse> updateTarefas(@RequestBody TarefasDTOResquest dto,
+    public ResponseEntity<TarefasDTOResponse> updateTarefas(@RequestBody TarefasDTORequest dto,
                                                             @RequestParam("id") String id,
                                                             @RequestHeader(name = "Authorization", required = false) String token) {
         return ResponseEntity.ok(tarefasService.updateTarefas(dto, id, token));
